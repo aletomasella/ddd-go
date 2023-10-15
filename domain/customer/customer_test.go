@@ -4,7 +4,7 @@ import (
 	"errors"
 	"testing"
 
-	"github.com/aletomasella/ddd-go/customer"
+	"github.com/aletomasella/ddd-go/domain/customer"
 )
 
 type testCase struct {

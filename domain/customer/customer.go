@@ -34,3 +34,8 @@ func NewCustomer(name string, lastname string) (Customer, error) {
 		transactions: make([]entities.Transaction, 0),
 	}, nil
 }
+
+// Getter for the ID
+func (c Customer) GetId() int {
+	return c.user.Id
+}
