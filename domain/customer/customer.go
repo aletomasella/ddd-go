@@ -39,3 +39,11 @@ func NewCustomer(name string, lastname string) (Customer, error) {
 func (c Customer) GetId() int {
 	return c.user.Id
 }
+
+func (c Customer) GetName() string {
+	return c.user.Name
+}
+
+func (c Customer) GetLastName() string {
+	return c.user.LastName
+}
