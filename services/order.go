@@ -2,7 +2,9 @@ package services
 
 import (
 	"github.com/aletomasella/ddd-go/domain/customer"
-	"github.com/aletomasella/ddd-go/domain/customer/memory"
+	customerMemory "github.com/aletomasella/ddd-go/domain/customer/memory"
+	"github.com/aletomasella/ddd-go/domain/product"
+	productMemory "github.com/aletomasella/ddd-go/domain/product/memory"
 )
 
 // A service is a type that provides access to the business logic of an application.
@@ -12,6 +14,7 @@ type OrderConfiguration func(os *OrderService) error
 
 type OrderService struct {
 	customers customer.CustomerRepository
+	products  product.ProductRepository
 }
 
 // Factory function that creates a new OrderService. ... means that the function accepts a variable number of arguments.
@@ -41,5 +44,18 @@ func WithCustomerRepository(cr customer.CustomerRepository) OrderConfiguration {
 
 // WithMemoryCustomerRepository is a configuration function that sets the customer repository to an in-memory implementation.
 func WithMemoryCustomerRepository() OrderConfiguration {
-	return WithCustomerRepository(memory.NewCustomerMemoryRepository())
+	return WithCustomerRepository(customerMemory.NewCustomerMemoryRepository())
+}
+
+// WithProductRepository is a configuration function that sets the product repository.
+func WithProductRepository(pr product.ProductRepository) OrderConfiguration {
+	return func(os *OrderService) error {
+		os.products = pr
+		return nil
+	}
+}
+
+// WithMemoryProductRepository is a configuration function that sets the product repository to an in-memory implementation.
+func WithMemoryProductRepository() OrderConfiguration {
+	return WithProductRepository(productMemory.NewMemoryProductRepository())
 }
