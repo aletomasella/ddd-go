@@ -20,8 +20,17 @@ func inicializeServer() {
 
 	app.Use(cors.New(cors.ConfigDefault))
 
+	data := fiber.Map{
+		"Title": "Hello, World!"}
+
 	app.Get("/", func(c *fiber.Ctx) error {
-		return c.Render("Base", fiber.Map{})
+		c.Cookie(&fiber.Cookie{
+			Name:  "refresh",
+			Value: "refresh",
+			Path:  "/",
+		})
+
+		return c.Render("Base", data)
 	})
 
 	app.Listen("localhost:3000")

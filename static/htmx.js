@@ -1477,18 +1477,18 @@ var htmx_min = { exports: {} };
         Xr.headers && (Wr = se(Wr, Xr.headers));
         var pn = nr(Mr, Be), cn = pn.errors, on = pn.values;
         Xr.values && (on = se(on, Xr.values));
-        var In = xr(Mr), Ln = se(on, In), dn = lr(Ln, Mr);
+        var kn = xr(Mr), Ln = se(on, kn), dn = lr(Ln, Mr);
         Be !== "get" && !cr(Mr) && (Wr["Content-Type"] = "application/x-www-form-urlencoded"), Y.config.getCacheBusterParam && Be === "get" && (dn["org.htmx.cache-buster"] = Q(Qr, "id") || "true"), (Yr == null || Yr === "") && (Yr = te().location.href);
         var Rn = dr(Mr, "hx-request"), Hn = ie(Mr).boosted, Sn = Y.config.methodsThatUseUrlParams.indexOf(Be) >= 0, Kr = { boosted: Hn, useUrlParams: Sn, parameters: dn, unfilteredParameters: Ln, headers: Wr, target: Qr, verb: Be, errors: cn, withCredentials: Xr.credentials || Rn.credentials || Y.config.withCredentials, timeout: Xr.timeout || Rn.timeout || Y.config.timeout, path: Yr, triggeringEvent: Dr };
         if (!fe(Mr, "htmx:configRequest", Kr))
           return ne(Ur), Jr(), jr;
         if (Yr = Kr.path, Be = Kr.verb, Wr = Kr.headers, dn = Kr.parameters, cn = Kr.errors, Sn = Kr.useUrlParams, cn && cn.length > 0)
           return fe(Mr, "htmx:validation:halted", Kr), ne(Ur), Jr(), jr;
-        var An = Yr.split("#"), Yn = An[0], Tn = An[1], sn = Yr;
+        var An = Yr.split("#"), In = An[0], Tn = An[1], sn = Yr;
         if (Sn) {
-          sn = Yn;
-          var kn = Object.keys(dn).length !== 0;
-          kn && (sn.indexOf("?") < 0 ? sn += "?" : sn += "&", sn += ar(dn), Tn && (sn += "#" + Tn));
+          sn = In;
+          var Yn = Object.keys(dn).length !== 0;
+          Yn && (sn.indexOf("?") < 0 ? sn += "?" : sn += "&", sn += ar(dn), Tn && (sn += "#" + Tn));
         }
         if (!Er(Mr, sn, Kr))
           return ue(Mr, "htmx:invalidPath", Kr), ne(Br), jr;
@@ -1718,3 +1718,9 @@ var htmx_min = { exports: {} };
 var htmx_minExports = htmx_min.exports;
 const htmx = /* @__PURE__ */ getDefaultExportFromCjs(htmx_minExports);
 window.htmx = htmx;
+const cookieToCheck = "refresh", cookie = document.cookie;
+console.log(cookie);
+let intervalId = null;
+document.cookie.includes(cookieToCheck) ? intervalId = setInterval(() => {
+  window.location.reload();
+}, 5e3) : intervalId && clearInterval(intervalId);
