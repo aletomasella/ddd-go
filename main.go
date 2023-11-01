@@ -23,12 +23,20 @@ func inicializeServer() {
 	data := fiber.Map{
 		"Title": "Hello, World!"}
 
+	sendReload := true
+
+	app.Get("/reload", func(c *fiber.Ctx) error {
+		// SEND TO RELOAD THE FIRST TIME (TRRIGER HOT RELOAD)
+		if sendReload {
+			sendReload = false
+			return c.JSON(fiber.Map{"reload": "true"})
+
+		} else {
+			return c.JSON(fiber.Map{"reload": "false"})
+		}
+	})
+
 	app.Get("/", func(c *fiber.Ctx) error {
-		c.Cookie(&fiber.Cookie{
-			Name:  "refresh",
-			Value: "refresh",
-			Path:  "/",
-		})
 
 		return c.Render("Base", data)
 	})

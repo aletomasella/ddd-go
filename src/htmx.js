@@ -3,20 +3,28 @@ import htmx from "htmx.org";
 // Assinging htmx to window object
 window.htmx = htmx;
 
-const cookieToCheck = "refresh";
+(function () {
+  let flag = false;
 
-const cookie = document.cookie;
+  async function checkToHotReload() {
+    try {
+      const response = await fetch("/reload");
+      const data = await response.json();
 
-console.log(cookie);
-
-let intervalId = null;
-
-if (document.cookie.includes(cookieToCheck)) {
-  intervalId = setInterval(() => {
-    window.location.reload();
-  }, 5000);
-} else {
-  if (intervalId) {
-    clearInterval(intervalId);
+      if (data.reload === "true") {
+        window.location.reload();
+      } else {
+        flag = true;
+      }
+    } catch (error) {
+      window.location.reload();
+    }
   }
-}
+
+  const intervalId = setInterval(checkToHotReload, 1000);
+
+  if (flag) {
+    console.log("clearing interval");
+    intervalId = clearInterval(intervalId);
+  }
+})();
